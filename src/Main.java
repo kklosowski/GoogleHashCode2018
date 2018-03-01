@@ -10,10 +10,11 @@ public class Main {
 
     public static void main(String[] args) {
         fileNames = new ArrayList<>();
-        fileNames.add("");
-        fileNames.add("");
-        fileNames.add("");
-        fileNames.add("");
+        fileNames.add("a_example");
+        fileNames.add("b_should_be_easy");
+        fileNames.add("c_no_hurry");
+        fileNames.add("d_metropolis");
+        fileNames.add("e_high_bonus");
         try {
             for (String FILE_NAME: fileNames) {
                 System.out.println(FILE_NAME);
