@@ -57,9 +57,8 @@ public class Solution {
     }
 
     public void distributeRides() {
-        List<Ride> rides = new ArrayList<>();
         List<Ride> copy = new ArrayList<>(rides);
-        rides.stream()
+        copy.stream()
                 .sorted(Comparator.comparing(x -> x.earliestStart))
                 .forEach(x -> {
                     Car car = getBestCarForARide(x);
