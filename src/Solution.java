@@ -57,19 +57,23 @@ public class Solution {
     }
 
     public void distributeRides() {
-        List<Ride> copy = new ArrayList<>(rides);
-        copy.stream()
-                .sorted(Comparator.comparing(x -> x.earliestStart))
-                .forEach(x -> {
-                    Car car = getBestCarForARide(x);
-                    if (car != null) {
-                        car.move(x);
-                        rides.remove(x);
-                    }
-                });
+        while (rides.size() > 0) {
+            List<Ride> copy = new ArrayList<>(rides);
+            copy.stream()
+                    .sorted(Comparator.comparing(x -> x.earliestStart))
+                    .forEach(x -> {
+                        Car car = getBestCarForARide(x);
+                        if (car != null) {
+                            car.move(x);
+                            rides.remove(x);
+                        } else {
+                            rides.remove(x);
+                        }
+                    });
+        }
     }
 
-    public void solve(){
+    public void solve() {
         distributeRides();
         printToFile(cars);
     }
@@ -91,7 +95,7 @@ public class Solution {
             });
 
             printWriter.close(); //Saving the data
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
