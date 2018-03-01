@@ -1,4 +1,9 @@
-import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 public class Solution {
     public final String FILE_NAME;
@@ -7,12 +12,10 @@ public class Solution {
     public int rows;
     public int columns;
     public int vehicles;
-    public int ridesNo;
     public int bonus;
     public int steps;
 
-    public Map<Integer, Ride> rides;
-
+    public List<Ride> rides;
     public List<Car> cars;
 
     public int[] params;
@@ -25,24 +28,23 @@ public class Solution {
         rows = params[0];
         columns = params[1];
         vehicles = params[2];
-        ridesNo = params[3];
         bonus = params[4];
         steps = params[5];
 
-        for (int i = 0; i < ridesNo; i++) {
+        for (int j = 0; j < params[2]; j++) {
+            cars.add(j, new Car(j, new Coord(0, 0)));
+        }
+
+        for (int i = 0; i < params[3]; i++) {
             int[] rideData = Arrays.stream(raw.get(0).split(" ")).mapToInt(Integer::valueOf).toArray();
-
-            Coord c1  = new Coord(rideData[0], rideData[1]);
-            Coord c2 = new Coord(rideData[2], rideData[3]);
-
-            rides.put(i, new Ride(c1,c2,rideData[4],rideData[5]));
+            rides.add(i, new Ride(i, new Coord(rideData[0], rideData[1]), new Coord(rideData[2], rideData[3]), rideData[4], rideData[5]));
         }
     }
 
-    public Car getClosestCar(Coord c){
+    public Car getClosestCar(Coord c) {
         return cars.stream().sorted(Comparator.comparing(x -> Utils.distance(x.position, c))).findFirst().orElseGet(null);
     }
-    
+
     public void printToFile(List<Car> cars) {
         FileWriter fileWriter = null;
 
@@ -51,10 +53,10 @@ public class Solution {
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
             cars.stream().forEach(x -> {
-                Car c = (Car) x;
-                List<Ride> history = c.getHistory();
+                Car c = x;
+                List<Ride> history = c.history;
                 history.stream().forEach(y -> {
-                    printWriter.print(c.getId() + " " + y.getId());
+                    printWriter.print(c.number + " " + y.rideId);
                     printWriter.print("\n");
                 });
             });
