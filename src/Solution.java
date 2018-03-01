@@ -52,6 +52,7 @@ public class Solution {
     public Car getBestCarForARide(Ride ride) {
         return getCarsByDistance(ride.startIntersection).stream()
                 .filter(x -> x.canMakeOnTime(ride))
+                .sorted(Comparator.comparing(x -> x.distTime(ride)))
                 .findFirst()
                 .orElse(null);
     }
@@ -62,6 +63,33 @@ public class Solution {
                 .sorted(Comparator.comparing(car::distTime))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void distributeByGlobalScore(){
+        int bestScore = 0;
+        Car bestCar = null;
+        Ride bestRide = null;
+
+        while (cars.stream().anyMatch(x -> rides.stream().anyMatch(x::canMakeOnTime))){
+//            System.out.println("thinking");
+            if (rides.size() % 100 == 0) System.out.println(rides.size());
+            for(Car car : cars){
+                for (Ride ride : rides){
+                    if(Utils.score(car, ride, this.bonus) > bestScore){
+                        bestScore = Utils.score(car, ride, this.bonus);
+                        bestCar = car;
+                        bestRide = ride;
+                    }
+                }
+            }
+            if (bestCar != null){
+                bestCar.move(bestRide);
+                rides.remove(bestRide);
+            }
+            bestScore = 0;
+            bestCar = null;
+            bestRide = null;
+        }
     }
 
     public void distributeRidesCarFirst(){
@@ -100,7 +128,8 @@ public class Solution {
     }
 
     public void solve() {
-        distributeRidesCarFirst();
+//        distributeRides();
+        distributeByGlobalScore();
         printToFile(cars);
     }
 

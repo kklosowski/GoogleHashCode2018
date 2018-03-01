@@ -35,6 +35,6 @@ public class Car {
     }
 
     public int distTime(Ride ride){
-        return ride.earliestStart - time - Utils.distance(position, ride.startIntersection);
+        return Math.abs(ride.earliestStart - time - Utils.distance(position, ride.startIntersection));
     }
 }
