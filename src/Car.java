@@ -31,4 +31,3 @@ public class Car {
         this.history.add(ride);
     }
 }
-
