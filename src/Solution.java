@@ -79,11 +79,10 @@ public class Solution {
         FileWriter fileWriter = null;
 
         try {
-            fileWriter = new FileWriter("./solution/" + FILE_NAME + ".out");
+            fileWriter = new FileWriter("./src/" + FILE_NAME + ".out");
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
-            cars.stream().forEach(x -> {
-                Car c = x;
+            cars.stream().forEach(c -> {
                 List<Ride> history = c.history;
                 printWriter.print(c.number);
                 history.stream().forEach(y -> {
