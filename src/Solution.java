@@ -83,7 +83,7 @@ public class Solution {
 
             cars.stream().forEach(c -> {
                 List<Ride> history = c.history;
-                printWriter.print(c.number);
+                printWriter.print(c.history.size());
                 history.stream().forEach(y -> {
                     printWriter.print(" " + y.rideId);
                 });
