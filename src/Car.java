@@ -30,6 +30,7 @@ public class Car {
         int tripTime = Utils.distance(ride.startIntersection, ride.finishIntersection);
 
         this.time = time + distanceTo + tripTime;
+        this.position = ride.finishIntersection;
         this.history.add(ride);
     }
 }
