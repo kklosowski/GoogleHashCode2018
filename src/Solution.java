@@ -92,6 +92,35 @@ public class Solution {
         }
     }
 
+    public void distributeByGlobalScore2(){
+        int bestScore = Integer.MAX_VALUE;
+        Car bestCar = null;
+        Ride bestRide = null;
+
+        while (cars.stream().anyMatch(x -> rides.stream().anyMatch(x::canMakeOnTime))){
+            if (rides.size() % 100 == 0) System.out.println(rides.size());
+            for(Car car : cars){
+                for (Ride ride : rides){
+                    if (car.canMakeOnTime(ride)){
+                        if(car.distTime(ride) < bestScore){
+                            bestScore = car.distTime(ride);
+                            bestCar = car;
+                            bestRide = ride;
+                        }
+                    }
+
+                }
+            }
+            if (bestCar != null){
+                bestCar.move(bestRide);
+                rides.remove(bestRide);
+            }
+            bestScore = Integer.MAX_VALUE;
+            bestCar = null;
+            bestRide = null;
+        }
+    }
+
     public void distributeRidesCarFirst(){
         while (rides.size() > 0){
             System.out.println(rides.size());
@@ -129,7 +158,7 @@ public class Solution {
 
     public void solve() {
 //        distributeRides();
-        distributeByGlobalScore();
+        distributeByGlobalScore2();
         printToFile(cars);
     }
 
