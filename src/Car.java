@@ -15,7 +15,7 @@ public class Car {
         int distance = Utils.distance(position, ride.startIntersection);
         int arrival = distance + this.time;
         int tripTime = Utils.distance(ride.startIntersection, ride.finishIntersection);
-        if(arrival < arrival + tripTime){
+        if(arrival < ride.latestFinish - tripTime){
             return true;
         }
         else {
