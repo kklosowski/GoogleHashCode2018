@@ -42,4 +42,26 @@ public class Solution {
     public Car getClosestCar(Coord c){
         return cars.stream().sorted(Comparator.comparing(x -> Utils.distance(x.position, c))).findFirst().orElseGet(null);
     }
+    
+    public void printToFile(List<Car> cars) {
+        FileWriter fileWriter = null;
+
+        try {
+            fileWriter = new FileWriter("./solution/" + FILE_NAME + ".out");
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+
+            cars.stream().forEach(x -> {
+                Car c = (Car) x;
+                List<Ride> history = c.getHistory();
+                history.stream().forEach(y -> {
+                    printWriter.print(c.getId() + " " + y.getId());
+                    printWriter.print("\n");
+                });
+            });
+
+            printWriter.close(); //Saving the data
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
