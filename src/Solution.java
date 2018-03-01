@@ -7,7 +7,7 @@ public class Solution {
     public int rows;
     public int columns;
     public int vehicles;
-    public int rides;
+    public int ridesNo;
     public int bonus;
     public int steps;
 
@@ -23,15 +23,18 @@ public class Solution {
         rows = params[0];
         columns = params[1];
         vehicles = params[2];
-        rides = params[3];
+        ridesNo = params[3];
         bonus = params[4];
         steps = params[5];
-        
 
-        /*
-        cacheCapacities = IntStream.generate(() -> params[4]).limit(params[3]).toArray();
-        this.cacheVideoAssignments = new HashMap<>();
-        */
+        for (int i = 0; i < ridesNo; i++) {
+            int[] rideData = Arrays.stream(raw.get(0).split(" ")).mapToInt(Integer::valueOf).toArray();
+
+            Coord c1  = new Coord(rideData[0], rideData[1]);
+            Coord c2 = new Coord(rideData[2], rideData[3]);
+
+            rides.put(i, new Ride(c1,c2,rideData[4],rideData[5]));
+        }
     }
 
     public Car getClosestCar(Coord c){
