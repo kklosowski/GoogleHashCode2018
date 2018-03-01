@@ -23,7 +23,12 @@ public class Car {
         }
     }
 
-    public void move(){
+    public void move(Ride ride){
+        int distanceTo = Utils.distance(position, ride.startIntersection);
+        int tripTime = Utils.distance(ride.startIntersection, ride.finishIntersection);
 
+        this.time = time + distanceTo + tripTime;
+        this.history.add(ride);
     }
 }
+
