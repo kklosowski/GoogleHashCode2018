@@ -77,10 +77,12 @@ public class Solution {
             if (rides.size() % 100 == 0) System.out.println(rides.size());
             for(Car car : cars){
                 for (Ride ride : rides){
-                    if(Utils.score(car, ride, this.bonus) > bestScore){
-                        bestScore = Utils.score(car, ride, this.bonus);
-                        bestCar = car;
-                        bestRide = ride;
+                    if (car.canMakeOnTime(ride)){
+                        if(Utils.score(car, ride, this.bonus) > bestScore){
+                            bestScore = Utils.score(car, ride, this.bonus);
+                            bestCar = car;
+                            bestRide = ride;
+                        }
                     }
                 }
             }
