@@ -19,7 +19,7 @@ public class Main {
             for (String FILE_NAME: fileNames) {
                 System.out.println(FILE_NAME);
                 List<String> raw = Files.lines(Paths.get("./inputs/" + FILE_NAME + ".in")).collect(Collectors.toList());
-                //Solution solution = new Solution(raw,FILE_NAME);
+                Solution solution = new Solution(raw,FILE_NAME);
                 //solution.solve();
             }
         } catch (Exception e) {
