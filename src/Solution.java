@@ -56,6 +56,32 @@ public class Solution {
                 .orElse(null);
     }
 
+    public Ride getBestRideForACar(Car car){
+        return rides.stream()
+                .filter(car::canMakeOnTime)
+                .sorted(Comparator.comparing(car::distTime))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void distributeRidesCarFirst(){
+        while (rides.size() > 0){
+            System.out.println(rides.size());
+            cars.forEach(x -> {
+                Ride ride = getBestRideForACar(x);
+                if (ride != null){
+                    x.move(ride);
+                    rides.remove(ride);
+                } else {
+                    // TODO: 01/03/2018 fix
+                    if (rides.size() > 0){
+                        rides.remove(0);
+                    }
+                }
+            });
+        }
+    }
+
     public void distributeRides() {
         while (rides.size() > 0) {
             List<Ride> copy = new ArrayList<>(rides);
@@ -74,7 +100,7 @@ public class Solution {
     }
 
     public void solve() {
-        distributeRides();
+        distributeRidesCarFirst();
         printToFile(cars);
     }
 

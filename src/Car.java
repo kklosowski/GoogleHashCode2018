@@ -33,4 +33,8 @@ public class Car {
         this.position = ride.finishIntersection;
         this.history.add(ride);
     }
+
+    public int distTime(Ride ride){
+        return ride.earliestStart - time - Utils.distance(position, ride.startIntersection);
+    }
 }
