@@ -1,6 +1,4 @@
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Solution {
     public final String FILE_NAME;
@@ -34,5 +32,9 @@ public class Solution {
         cacheCapacities = IntStream.generate(() -> params[4]).limit(params[3]).toArray();
         this.cacheVideoAssignments = new HashMap<>();
         */
+    }
+
+    public Car getClosestCar(Coord c){
+        return cars.stream().sorted(Comparator.comparing(x -> Utils.distance(x.position, c))).findFirst().orElseGet(null);
     }
 }
