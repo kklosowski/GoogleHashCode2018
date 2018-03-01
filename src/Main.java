@@ -18,9 +18,9 @@ public class Main {
         try {
             for (String FILE_NAME: fileNames) {
                 System.out.println(FILE_NAME);
-                List<String> raw = Files.lines(Paths.get("./inputs/" + FILE_NAME + ".in")).collect(Collectors.toList());
+                List<String> raw = Files.lines(Paths.get("./src/" + FILE_NAME + ".in")).collect(Collectors.toList());
                 Solution solution = new Solution(raw,FILE_NAME);
-                //solution.solve();
+                solution.solve();
             }
         } catch (Exception e) {
             e.printStackTrace();

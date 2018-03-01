@@ -1,9 +1,11 @@
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Solution {
     public final String FILE_NAME;
@@ -15,8 +17,8 @@ public class Solution {
     public int bonus;
     public int steps;
 
-    public List<Ride> rides;
-    public List<Car> cars;
+    public List<Ride> rides = new ArrayList<>();
+    public List<Car> cars = new ArrayList<>();
 
     public int[] params;
 
@@ -31,7 +33,7 @@ public class Solution {
         bonus = params[4];
         steps = params[5];
 
-        for (int j = 0; j < params[2]; j++) {
+        for (int j = 0; j < vehicles; j++) {
             cars.add(j, new Car(j, new Coord(0, 0)));
         }
 
@@ -41,15 +43,43 @@ public class Solution {
         }
     }
 
-    public Car getClosestCar(Coord c) {
-        return cars.stream().sorted(Comparator.comparing(x -> Utils.distance(x.position, c))).findFirst().orElseGet(null);
+    public List<Car> getCarsByDistance(Coord c) {
+        return cars.stream()
+                .sorted(Comparator.comparing(x -> Utils.distance(x.position, c)))
+                .collect(Collectors.toList());
+    }
+
+    public Car getBestCarForARide(Ride ride) {
+        return getCarsByDistance(ride.startIntersection).stream()
+                .filter(x -> x.canMakeOnTime(ride))
+                .findFirst()
+                .orElseGet(null);
+    }
+
+    public void distributeRides() {
+        List<Ride> rides = new ArrayList<>();
+        List<Ride> copy = new ArrayList<>(rides);
+        rides.stream()
+                .sorted(Comparator.comparing(x -> x.earliestStart))
+                .forEach(x -> {
+                    Car car = getBestCarForARide(x);
+                    if (car != null) {
+                        car.move(x);
+                        rides.remove(x);
+                    }
+                });
+    }
+
+    public void solve(){
+        distributeRides();
+        printToFile(cars);
     }
 
     public void printToFile(List<Car> cars) {
         FileWriter fileWriter = null;
 
         try {
-            fileWriter = new FileWriter("./solution/" + FILE_NAME + ".out");
+            fileWriter = new FileWriter("./src/" + FILE_NAME + ".out");
             PrintWriter printWriter = new PrintWriter(fileWriter);
 
             cars.stream().forEach(x -> {
@@ -62,7 +92,7 @@ public class Solution {
             });
 
             printWriter.close(); //Saving the data
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
