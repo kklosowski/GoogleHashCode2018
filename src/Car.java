@@ -29,8 +29,13 @@ public class Car {
         int distanceTo = Utils.distance(position, ride.startIntersection);
         int tripTime = Utils.distance(ride.startIntersection, ride.finishIntersection);
 
-        this.time = time + distanceTo + tripTime;
-        this.position = ride.finishIntersection;
+        if(distanceTo+this.time <= ride.earliestStart){
+            time = ride.earliestStart + tripTime;
+        }
+        else {
+            this.time = time + distanceTo + tripTime;
+            this.position = ride.finishIntersection;
+        }
         this.history.add(ride);
     }
 
