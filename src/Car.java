@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Car {
@@ -9,6 +10,7 @@ public class Car {
     public Car(int number, Coord position){
         this.number = number;
         this.position = position;
+        this.history = new ArrayList<>();
     }
 
     public boolean canMakeOnTime(Ride ride){
