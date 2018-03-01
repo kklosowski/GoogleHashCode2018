@@ -53,7 +53,7 @@ public class Solution {
         return getCarsByDistance(ride.startIntersection).stream()
                 .filter(x -> x.canMakeOnTime(ride))
                 .findFirst()
-                .orElseGet(null);
+                .orElse(null);
     }
 
     public void distributeRides() {
