@@ -39,7 +39,8 @@ public class Solution {
         }
 
         for (int i = 0; i < params[3]; i++) {
-            int[] rideData = Arrays.stream(raw.get(0).split(" ")).mapToInt(Integer::valueOf).toArray();
+            //System.out.println(i);
+            int[] rideData = Arrays.stream(raw.get(i).split(" ")).mapToInt(Integer::valueOf).toArray();
             rides.add(i, new Ride(i, new Coord(rideData[0], rideData[1]), new Coord(rideData[2], rideData[3]), rideData[4], rideData[5]));
         }
     }
@@ -124,7 +125,7 @@ public class Solution {
 
     public void distributeRidesCarFirst(){
         while (rides.size() > 0){
-            System.out.println(rides.size());
+            //System.out.println(rides.size());
             cars.forEach(x -> {
                 Ride ride = getBestRideForACar(x);
                 if (ride != null){
