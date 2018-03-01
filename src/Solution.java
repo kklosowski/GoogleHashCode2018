@@ -13,6 +13,8 @@ public class Solution {
 
     public Map<Integer, Ride> rides;
 
+    public List<Car> cars;
+
     public int[] params;
 
     public Solution(List<String> raw, String filename) {
