@@ -7,6 +7,6 @@ public class Utils {
     public static int distance;
 
     public void distance(Coord c1, Coord c2){
-        this.distance = (c2.y - c1.y) + (c2.x - c1.x);
+        this.distance = Math.abs(c2.y - c1.y) + Math.abs(c2.x - c1.x);
     }
 }
