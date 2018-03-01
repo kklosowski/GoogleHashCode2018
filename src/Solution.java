@@ -26,6 +26,7 @@ public class Solution {
         this.FILE_NAME = filename;
         this.raw = raw;
         params = Arrays.stream(raw.get(0).split(" ")).mapToInt(Integer::valueOf).toArray();
+        raw.remove(0);
 
         rows = params[0];
         columns = params[1];
@@ -158,7 +159,7 @@ public class Solution {
 
     public void solve() {
 //        distributeRides();
-        distributeByGlobalScore2();
+        distributeByGlobalScore();
         printToFile(cars);
     }
 

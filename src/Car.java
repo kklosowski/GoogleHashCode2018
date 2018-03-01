@@ -13,16 +13,20 @@ public class Car {
         this.history = new ArrayList<>();
     }
 
+//    public boolean canMakeOnTime(Ride ride){
+//        int distance = Utils.distance(position, ride.startIntersection);
+//        int arrival = distance + this.time;
+//        int tripTime = Utils.distance(ride.startIntersection, ride.finishIntersection);
+//        if(arrival < ride.latestFinish - tripTime){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
+
     public boolean canMakeOnTime(Ride ride){
-        int distance = Utils.distance(position, ride.startIntersection);
-        int arrival = distance + this.time;
-        int tripTime = Utils.distance(ride.startIntersection, ride.finishIntersection);
-        if(arrival < ride.latestFinish - tripTime){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return (time + Utils.distance(position, ride.startIntersection) + Utils.distance(ride.startIntersection, ride.finishIntersection)) <= ride.latestFinish;
     }
 
     public void move(Ride ride){
